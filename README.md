@@ -4,25 +4,16 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/dd6af1d7af8940b284a0e5b15846ecfb)](https://www.codacy.com/app/232365732/epay?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dianbaer/epay&amp;utm_campaign=Badge_Grade)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-# epay是一个支付平台。提供，支持对接任何第三方身份系统。
+# epay是一个标准的支付平台，作为支付应用APP、第三方支付平台、身份系统三方对接的标准中间服务器。提供注册应用APP，创建用户订单，用户支付跳转，用户支付结果跳转与通知等功能。开发者只需关心1个创建订单接口、1个支付跳转url、1个支付结果回跳url、1个支付结果通知url即可。
 
 ## github 互star 互赞，及此项目问题反馈与答疑QQ群：537982451
-
-### 基于grain RPC框架
-
-https://github.com/dianbaer/grain
-
-	grain-httpserver
-	grain-httpclient
-	grain-mariadb
-	grain-threadmsg
 	
 	
-## 流程图1
+## 流程图1（注册app流程图）
 
 ![流程图1](./epay1.png "epay1.png")
 
-## 流程图2
+## 流程图2（支付流程图）
 
 ![流程图2](./epay2.png "epay2.png")
 
@@ -43,7 +34,7 @@ https://github.com/dianbaer/grain
 				|--AlipayNotifyServlet.java-------支付宝异步通知接收类
 				|--AlipayReturnServlet.java-------支付宝同步通知接收类
 			
-		|--com.alipay-----------------------------支付宝调用包
+		|--com.alipay-----------------------------支付宝调用包（整合了MD5与RSA，通过配置可选）
 	|--protobuf（消息包生成工具）
 	|--WebContent
 		|--*.html（请求接口测试）
