@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.epay.config.CommonConfigPayCenter;
+import org.epay.config.CommonConfig;
 import org.epay.data.UserData;
 import org.grain.httpclient.HttpUtil;
 import org.grain.httpserver.HttpConfig;
@@ -18,7 +18,7 @@ public class IdentityAction {
 		Map<String, String> header = new HashMap<>();
 		header.put("hOpCode", "11");
 		header.put("token", token);
-		byte[] returnByte = HttpUtil.send(js.toString(), CommonConfigPayCenter.UCENTER_URL, header, HttpUtil.POST);
+		byte[] returnByte = HttpUtil.send(js.toString(), CommonConfig.UCENTER_URL, header, HttpUtil.POST);
 		if (returnByte != null) {
 			String str = null;
 			try {

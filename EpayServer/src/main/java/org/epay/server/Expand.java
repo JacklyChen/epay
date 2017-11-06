@@ -10,11 +10,11 @@ import java.util.TimeZone;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 
-import org.epay.config.CommonConfigPayCenter;
-import org.epay.http.HOpCodePayCenter;
+import org.epay.config.CommonConfig;
+import org.epay.http.HOpCode;
 import org.epay.http.filter.TokenHttpFilter;
 import org.epay.log.MariadbLog;
-import org.epay.msg.MsgOpCodePayCenter;
+import org.epay.msg.MsgOpCode;
 import org.epay.service.AppService;
 import org.epay.service.LoginService;
 import org.epay.service.NotifyService;
@@ -41,10 +41,10 @@ public class Expand implements IExpandServer {
 		AsyncThreadManager.init(100, 10, 3, 0, null);
 		AsyncThreadManager.start();
 		MsgManager.init(true, null);
-		CommonConfigPayCenter.init(properties);
-		HOpCodePayCenter.init();
+		CommonConfig.init(properties);
+		HOpCode.init();
 
-		MsgOpCodePayCenter.init();
+		MsgOpCode.init();
 		HttpManager.addFilter(new TokenHttpFilter());
 		HttpManager.addHttpListener(new AppService());
 		HttpManager.addHttpListener(new OrderRecordService());

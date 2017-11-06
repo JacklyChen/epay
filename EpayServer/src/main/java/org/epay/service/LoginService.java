@@ -6,7 +6,7 @@ import java.util.Map;
 import org.epay.action.PCErrorPack;
 import org.epay.action.IdentityAction;
 import org.epay.data.UserData;
-import org.epay.http.HOpCodePayCenter;
+import org.epay.http.HOpCode;
 import org.epay.protobuf.http.LoginProto.LoginC;
 import org.epay.protobuf.http.LoginProto.LoginS;
 import org.epay.protobuf.http.PCErrorProto.PCError;
@@ -20,7 +20,7 @@ public class LoginService implements IHttpListener {
 	@Override
 	public Map<String, String> getHttps() {
 		HashMap<String, String> map = new HashMap<>();
-		map.put(HOpCodePayCenter.LOGIN, "loginHandle");
+		map.put(HOpCode.LOGIN, "loginHandle");
 		return map;
 	}
 
@@ -29,7 +29,7 @@ public class LoginService implements IHttpListener {
 		UserData userData = IdentityAction.getUser(message.getToken());
 		if (userData == null) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_4, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		LoginS.Builder builder = LoginS.newBuilder();
 		builder.setHOpCode(httpPacket.hSession.headParam.hOpCode);

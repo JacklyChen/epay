@@ -8,7 +8,7 @@ import java.util.Map;
 import org.epay.action.OrderRecordAction;
 import org.epay.config.OrderRecordConfig;
 import org.epay.model.ext.OrderRecordExt;
-import org.epay.msg.MsgOpCodePayCenter;
+import org.epay.msg.MsgOpCode;
 import org.epay.protobuf.msg.AddNotifyOuterClass.AddNotify;
 import org.epay.tool.TimeUtils;
 import org.grain.httpserver.HttpConfig;
@@ -49,7 +49,7 @@ public class NotifyService implements IMsgListener {
 	@Override
 	public Map<String, String> getMsgs() throws Exception {
 		HashMap<String, String> map = new HashMap<>();
-		map.put(MsgOpCodePayCenter.ADD_NOTIFY, "addNotifyHandle");
+		map.put(MsgOpCode.ADD_NOTIFY, "addNotifyHandle");
 		return map;
 	}
 

@@ -15,7 +15,7 @@ import org.epay.action.PayNotifyLogAction;
 import org.epay.config.OrderRecordConfig;
 import org.epay.log.LogManagerPayCenter;
 import org.epay.model.ext.OrderRecordExt;
-import org.epay.msg.MsgOpCodePayCenter;
+import org.epay.msg.MsgOpCode;
 import org.epay.protobuf.msg.AddNotifyOuterClass.AddNotify;
 import org.epay.tool.StringUtil;
 import org.grain.log.RunMonitor;
@@ -117,7 +117,7 @@ public class AlipayNotifyServlet extends HttpServlet {
 				if (result) {
 					AddNotify.Builder builder = AddNotify.newBuilder();
 					builder.setOrderRecordId(orderRecord.getOrderRecordId());
-					ThreadMsgManager.dispatchThreadMsg(MsgOpCodePayCenter.ADD_NOTIFY, builder.build(), null);
+					ThreadMsgManager.dispatchThreadMsg(MsgOpCode.ADD_NOTIFY, builder.build(), null);
 				}
 				response.getWriter().print("fail");
 				return;
@@ -141,7 +141,7 @@ public class AlipayNotifyServlet extends HttpServlet {
 				if (result) {
 					AddNotify.Builder builder = AddNotify.newBuilder();
 					builder.setOrderRecordId(orderRecord.getOrderRecordId());
-					ThreadMsgManager.dispatchThreadMsg(MsgOpCodePayCenter.ADD_NOTIFY, builder.build(), null);
+					ThreadMsgManager.dispatchThreadMsg(MsgOpCode.ADD_NOTIFY, builder.build(), null);
 					runMonitor.putMonitor("发送推送请求：" + orderRecord.getOrderRecordId());
 				}
 				orderRecord = OrderRecordAction.getOrderRecordById(out_trade_no);
@@ -164,7 +164,7 @@ public class AlipayNotifyServlet extends HttpServlet {
 				if (result) {
 					AddNotify.Builder builder = AddNotify.newBuilder();
 					builder.setOrderRecordId(orderRecord.getOrderRecordId());
-					ThreadMsgManager.dispatchThreadMsg(MsgOpCodePayCenter.ADD_NOTIFY, builder.build(), null);
+					ThreadMsgManager.dispatchThreadMsg(MsgOpCode.ADD_NOTIFY, builder.build(), null);
 					runMonitor.putMonitor("发送推送请求：" + orderRecord.getOrderRecordId());
 				}
 				orderRecord = OrderRecordAction.getOrderRecordById(out_trade_no);

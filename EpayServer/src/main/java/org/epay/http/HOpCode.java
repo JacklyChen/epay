@@ -27,7 +27,7 @@ import org.epay.protobuf.http.PayProto.VerifyNotifyC;
 import org.epay.protobuf.http.PayProto.VerifyNotifyS;
 import org.grain.httpserver.HttpManager;
 
-public class HOpCodePayCenter {
+public class HOpCode {
 
 	public static String PC_ERROR = "199";
 

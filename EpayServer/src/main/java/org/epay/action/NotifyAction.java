@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.epay.config.CommonConfigPayCenter;
+import org.epay.config.CommonConfig;
 import org.epay.config.NotifyConfig;
 import org.epay.dao.base.NotifyMapper;
 import org.epay.model.base.Notify;
@@ -27,7 +27,7 @@ public class NotifyAction {
 		notify.setOrderRecordId(orderRecordId);
 		notify.setAppId(appId);
 		notify.setNotifyCreateTime(date);
-		Date expireTime = new Date(date.getTime() + CommonConfigPayCenter.NOTIFY_EXPIRE_TIME);
+		Date expireTime = new Date(date.getTime() + CommonConfig.NOTIFY_EXPIRE_TIME);
 		notify.setNotifyExpireTime(expireTime);
 		notify.setNotifyType((byte) notifyType);
 		SqlSession sqlSession = null;

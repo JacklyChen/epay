@@ -2,7 +2,7 @@ package org.epay.config;
 
 import java.util.Properties;
 
-public class CommonConfigPayCenter {
+public class CommonConfig {
 
 	public static String ALIPAY_PARTNER;
 	public static String ALIPAY_SELLER_ID;

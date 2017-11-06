@@ -8,11 +8,11 @@ import java.util.Map;
 import org.epay.action.NotifyAction;
 import org.epay.action.OrderRecordAction;
 import org.epay.action.PCErrorPack;
-import org.epay.config.CommonConfigPayCenter;
+import org.epay.config.CommonConfig;
 import org.epay.config.NotifyConfig;
 import org.epay.config.OrderRecordConfig;
 import org.epay.data.UserData;
-import org.epay.http.HOpCodePayCenter;
+import org.epay.http.HOpCode;
 import org.epay.model.base.Notify;
 import org.epay.model.base.OrderGoods;
 import org.epay.model.ext.OrderRecordExt;
@@ -36,9 +36,9 @@ public class PayService implements IHttpListener {
 	@Override
 	public Map<String, String> getHttps() {
 		HashMap<String, String> map = new HashMap<>();
-		map.put(HOpCodePayCenter.GET_PAY_HTML, "getPayHTMLHandle");
-		map.put(HOpCodePayCenter.GET_RETURN_URL, "getReturnUrlHandle");
-		map.put(HOpCodePayCenter.VERIFY_NOTIFY, "verifyNotifyHandle");
+		map.put(HOpCode.GET_PAY_HTML, "getPayHTMLHandle");
+		map.put(HOpCode.GET_RETURN_URL, "getReturnUrlHandle");
+		map.put(HOpCode.VERIFY_NOTIFY, "verifyNotifyHandle");
 		return map;
 	}
 
@@ -67,12 +67,12 @@ public class PayService implements IHttpListener {
 		OrderRecordExt orderRecord = OrderRecordAction.getOrderRecordById(message.getOrderRecordId());
 		if (orderRecord == null) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_1, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		// 该订单必须完成或者失败
 		if (orderRecord.getOrderRecordPayStatus().intValue() == OrderRecordConfig.PAY_STATUS_UNPAID) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_5, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		// 该订单是否是此用户的
 		UserData userData = (UserData) httpPacket.hSession.otherData;
@@ -80,17 +80,17 @@ public class PayService implements IHttpListener {
 		httpPacket.runMonitor.putMonitor("orderRecord.getOrderRecordUserId():" + orderRecord.getOrderRecordUserId());
 		if (!userData.getUserId().equals(orderRecord.getOrderRecordUserId())) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_2, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		Notify notify = NotifyAction.createNotify(orderRecord.getAppId(), orderRecord.getOrderRecordId(), NotifyConfig.TYPE_RETURN);
 		if (notify == null) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_6, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		String returnUrl = OrderRecordAction.getReturnUrl(orderRecord, notify);
 		if (returnUrl == null) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_7, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 
 		GetReturnUrlS.Builder builder = GetReturnUrlS.newBuilder();
@@ -105,19 +105,19 @@ public class PayService implements IHttpListener {
 		OrderRecordExt orderRecord = OrderRecordAction.getOrderRecordById(message.getOrderRecordId());
 		if (orderRecord == null) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_1, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		List<OrderGoods> orderGoodsList = OrderRecordAction.getOrderGoodsListByOrderRecordId(orderRecord.getOrderRecordId());
 		if (orderGoodsList == null) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_3, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		orderRecord.orderGoodsArray = orderGoodsList;
 		// 该订单是否是此用户的
 		UserData userData = (UserData) httpPacket.hSession.otherData;
 		if (!userData.getUserId().equals(orderRecord.getOrderRecordUserId())) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_2, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		String subject = OrderRecordAction.getSubject(orderRecord);
 		// 把请求参数打包成数组
@@ -148,14 +148,14 @@ public class PayService implements IHttpListener {
 	}
 
 	public PayService() {
-		AlipayConfig.partner = CommonConfigPayCenter.ALIPAY_PARTNER;
-		AlipayConfig.seller_id = CommonConfigPayCenter.ALIPAY_SELLER_ID;
-		AlipayConfig.notify_url = CommonConfigPayCenter.ALIPAY_NOTIFY_URL;
-		AlipayConfig.return_url = CommonConfigPayCenter.ALIPAY_RETURN_URL;
-		AlipayConfig.key = CommonConfigPayCenter.ALIPAY_KEY;
-		AlipayConfig.sign_type = CommonConfigPayCenter.ALIPAY_ENCRYPT_TYPE;
-		AlipayConfig.private_key = CommonConfigPayCenter.ALIPAY_PRIVATE_KEY;
-		AlipayConfig.alipay_public_key = CommonConfigPayCenter.ALIPAY_ALIPAY_PUBLIC_KEY;
+		AlipayConfig.partner = CommonConfig.ALIPAY_PARTNER;
+		AlipayConfig.seller_id = CommonConfig.ALIPAY_SELLER_ID;
+		AlipayConfig.notify_url = CommonConfig.ALIPAY_NOTIFY_URL;
+		AlipayConfig.return_url = CommonConfig.ALIPAY_RETURN_URL;
+		AlipayConfig.key = CommonConfig.ALIPAY_KEY;
+		AlipayConfig.sign_type = CommonConfig.ALIPAY_ENCRYPT_TYPE;
+		AlipayConfig.private_key = CommonConfig.ALIPAY_PRIVATE_KEY;
+		AlipayConfig.alipay_public_key = CommonConfig.ALIPAY_ALIPAY_PUBLIC_KEY;
 	}
 
 }

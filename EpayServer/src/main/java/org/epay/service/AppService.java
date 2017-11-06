@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.epay.action.AppAction;
-import org.epay.http.HOpCodePayCenter;
+import org.epay.http.HOpCode;
 import org.epay.model.base.App;
 import org.epay.protobuf.http.AppProto.CreateAppC;
 import org.epay.protobuf.http.AppProto.CreateAppS;
@@ -25,10 +25,10 @@ public class AppService implements IHttpListener {
 	@Override
 	public Map<String, String> getHttps() {
 		HashMap<String, String> map = new HashMap<>();
-		map.put(HOpCodePayCenter.CREATE_APP, "createAppHandle");
-		map.put(HOpCodePayCenter.UPDATE_APP, "updateAppHandle");
-		map.put(HOpCodePayCenter.GET_APP, "getAppHandle");
-		map.put(HOpCodePayCenter.GET_APP_LIST, "getAppListHandle");
+		map.put(HOpCode.CREATE_APP, "createAppHandle");
+		map.put(HOpCode.UPDATE_APP, "updateAppHandle");
+		map.put(HOpCode.GET_APP, "getAppHandle");
+		map.put(HOpCode.GET_APP_LIST, "getAppListHandle");
 		return map;
 	}
 

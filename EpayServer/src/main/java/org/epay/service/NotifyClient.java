@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import org.epay.action.NotifyAction;
 import org.epay.action.OrderRecordAction;
-import org.epay.config.CommonConfigPayCenter;
+import org.epay.config.CommonConfig;
 import org.epay.config.NotifyConfig;
 import org.epay.config.OrderRecordConfig;
 import org.epay.http.NotifyUtil;
@@ -55,7 +55,7 @@ public class NotifyClient implements ICycle {
 				continue;
 			}
 			// 大于最大推送次数的跳过
-			if (orderRecord.getOrderRecordNotifyTime().intValue() > CommonConfigPayCenter.MAX_NOTIFY_TIME) {
+			if (orderRecord.getOrderRecordNotifyTime().intValue() > CommonConfig.MAX_NOTIFY_TIME) {
 				continue;
 			}
 			List<Notify> notifyList = NotifyAction.getNotifyList(null, orderRecord.getOrderRecordId(), NotifyConfig.TYPE_NOTIFY, 0, 1);
@@ -64,7 +64,7 @@ public class NotifyClient implements ICycle {
 				continue;
 			}
 			if (notifyList.size() > 0) {
-				if (date.getTime() < notifyList.get(0).getNotifyCreateTime().getTime() + CommonConfigPayCenter.NOTIFY_INTERVAL) {
+				if (date.getTime() < notifyList.get(0).getNotifyCreateTime().getTime() + CommonConfig.NOTIFY_INTERVAL) {
 					leaveArray.add(orderRecordId);
 					continue;
 				}

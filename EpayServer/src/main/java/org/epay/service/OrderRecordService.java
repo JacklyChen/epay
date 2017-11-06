@@ -8,7 +8,7 @@ import org.epay.action.AppAction;
 import org.epay.action.OrderRecordAction;
 import org.epay.action.PCErrorPack;
 import org.epay.data.UserData;
-import org.epay.http.HOpCodePayCenter;
+import org.epay.http.HOpCode;
 import org.epay.model.base.App;
 import org.epay.model.base.OrderGoods;
 import org.epay.model.ext.OrderRecordExt;
@@ -33,10 +33,10 @@ public class OrderRecordService implements IHttpListener {
 	@Override
 	public Map<String, String> getHttps() {
 		HashMap<String, String> map = new HashMap<>();
-		map.put(HOpCodePayCenter.CREATE_ORDER_RECORD, "createOrderRecordHandle");
+		map.put(HOpCode.CREATE_ORDER_RECORD, "createOrderRecordHandle");
 		// map.put(HOpCodePayCenter.UPDATE_ORDER_RECORD, "updateOrderRecordHandle");
-		map.put(HOpCodePayCenter.GET_ORDER_RECORD, "getOrderRecordHandle");
-		map.put(HOpCodePayCenter.GET_ORDER_RECORD_LIST, "getOrderRecordListHandle");
+		map.put(HOpCode.GET_ORDER_RECORD, "getOrderRecordHandle");
+		map.put(HOpCode.GET_ORDER_RECORD_LIST, "getOrderRecordListHandle");
 		return map;
 	}
 
@@ -81,18 +81,18 @@ public class OrderRecordService implements IHttpListener {
 		OrderRecordExt orderRecord = OrderRecordAction.getOrderRecordById(message.getOrderRecordId());
 		if (orderRecord == null) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_1, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		// 该订单是否是此用户的
 		UserData userData = (UserData) httpPacket.hSession.otherData;
 		if (!userData.getUserId().equals(orderRecord.getOrderRecordUserId())) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_2, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		List<OrderGoods> orderGoodsList = OrderRecordAction.getOrderGoodsListByOrderRecordId(orderRecord.getOrderRecordId());
 		if (orderGoodsList == null) {
 			PCError errorPack = PCErrorPack.create(PCErrorCode.ERROR_CODE_3, httpPacket.hSession.headParam.hOpCode);
-			throw new HttpException(HOpCodePayCenter.PC_ERROR, errorPack);
+			throw new HttpException(HOpCode.PC_ERROR, errorPack);
 		}
 		orderRecord.orderGoodsArray = orderGoodsList;
 		GetOrderRecordS.Builder builder = GetOrderRecordS.newBuilder();
