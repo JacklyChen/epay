@@ -1,6 +1,6 @@
 function LoginPayCenterMediator() {
-	this.orderRecordId;
-	this.token;
+    this.orderRecordId;
+    this.token;
     this.init = function (view) {
         this.token = $T.getUrlParam.getUrlParam($T.httpConfig.TOKEN);
         if (this.token == null) {
@@ -24,7 +24,7 @@ function LoginPayCenterMediator() {
     this.handleNotification = function (data) {
         switch (data[0].name) {
             case $T.notificationExt.LOGIN_SUCCESS:
-            	$T.cookieParam.setCookieParam($T.cookieName.TOKEN, this.token);
+                $T.cookieParam.setCookieParam($T.cookieName.TOKEN, this.token);
                 window.location.href = "index.html";
                 break;
         }
