@@ -24,7 +24,7 @@ function OrderRecordProxy() {
         $T.httpUtil.send(sendParam);
     }
     this.createOrderRecordSuccess = function (result, sendParam) {
-
+        $T.viewManager.notifyObservers($T.viewManager.getNotification($T.notificationExt.CREATE_RECORD_SUCCESS, result));
     }
     this.createOrderRecordFail = function (result, sendParam) {
 
@@ -71,7 +71,7 @@ function OrderRecordProxy() {
         $T.httpUtil.send(sendParam);
     }
     this.getOrderRecordSuccess = function (result, sendParam) {
-
+        $T.viewManager.notifyObservers($T.viewManager.getNotification($T.notificationExt.GET_ORDER_RECORD_SUCCESS, result));
     }
     this.getOrderRecordFail = function (result, sendParam) {
 
