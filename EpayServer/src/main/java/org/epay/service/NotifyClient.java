@@ -10,9 +10,9 @@ import org.epay.action.OrderRecordAction;
 import org.epay.config.CommonConfig;
 import org.epay.config.NotifyConfig;
 import org.epay.config.OrderRecordConfig;
-import org.epay.http.NotifyUtil;
 import org.epay.model.base.Notify;
 import org.epay.model.ext.OrderRecordExt;
+import org.grain.httpclient.HttpUtil;
 import org.grain.httpserver.HttpConfig;
 import org.grain.thread.ICycle;
 
@@ -78,9 +78,10 @@ public class NotifyClient implements ICycle {
 			if (notifyUrl == null) {
 				continue;
 			}
-			String result = NotifyUtil.send(notifyUrl);
+			byte[] byteResult = HttpUtil.send(null, notifyUrl, null, HttpUtil.GET);
+
 			OrderRecordExt updateOrderRecord;
-			if (result == null) {
+			if (byteResult == null) {
 				HttpConfig.log.info("通知失败，未返回数据");
 				updateOrderRecord = OrderRecordAction.updateOrderRecord(orderRecordId, 0, 0, 0, 0, orderRecord.getOrderRecordNotifyTime().intValue() + 1);
 				leaveArray.add(orderRecordId);
@@ -89,24 +90,27 @@ public class NotifyClient implements ICycle {
 				} else {
 					HttpConfig.log.info("修改OrderRecord notifytime成功");
 				}
-			} else if (!result.equals("success")) {
-				HttpConfig.log.info("通知失败，返回数据为" + result);
-				NotifyAction.updateNotify(notify.getNotifyId(), result);
-				updateOrderRecord = OrderRecordAction.updateOrderRecord(orderRecordId, 0, 0, 0, 0, orderRecord.getOrderRecordNotifyTime().intValue() + 1);
-				leaveArray.add(orderRecordId);
-				if (updateOrderRecord == null) {
-					HttpConfig.log.warn("修改OrderRecord notifytime失败");
-				} else {
-					HttpConfig.log.info("修改OrderRecord notifytime成功");
-				}
 			} else {
-				HttpConfig.log.info("通知成功，返回数据为" + result);
-				NotifyAction.updateNotify(notify.getNotifyId(), result);
-				updateOrderRecord = OrderRecordAction.updateOrderRecord(orderRecordId, 0, 0, 0, OrderRecordConfig.NOTIFY_RESULT_YES, orderRecord.getOrderRecordNotifyTime().intValue() + 1);
-				if (updateOrderRecord == null) {
-					HttpConfig.log.warn("修改OrderRecord notifytime与状态失败");
+				String result = new String(byteResult, HttpConfig.ENCODE);
+				if (!result.equals("success")) {
+					HttpConfig.log.info("通知失败，返回数据为" + result);
+					NotifyAction.updateNotify(notify.getNotifyId(), result);
+					updateOrderRecord = OrderRecordAction.updateOrderRecord(orderRecordId, 0, 0, 0, 0, orderRecord.getOrderRecordNotifyTime().intValue() + 1);
+					leaveArray.add(orderRecordId);
+					if (updateOrderRecord == null) {
+						HttpConfig.log.warn("修改OrderRecord notifytime失败");
+					} else {
+						HttpConfig.log.info("修改OrderRecord notifytime成功");
+					}
 				} else {
-					HttpConfig.log.info("修改OrderRecord notifytime与状态成功");
+					HttpConfig.log.info("通知成功，返回数据为" + result);
+					NotifyAction.updateNotify(notify.getNotifyId(), result);
+					updateOrderRecord = OrderRecordAction.updateOrderRecord(orderRecordId, 0, 0, 0, OrderRecordConfig.NOTIFY_RESULT_YES, orderRecord.getOrderRecordNotifyTime().intValue() + 1);
+					if (updateOrderRecord == null) {
+						HttpConfig.log.warn("修改OrderRecord notifytime与状态失败");
+					} else {
+						HttpConfig.log.info("修改OrderRecord notifytime与状态成功");
+					}
 				}
 			}
 
