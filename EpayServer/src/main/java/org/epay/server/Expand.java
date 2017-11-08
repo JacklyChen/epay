@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import org.epay.config.CommonConfig;
 import org.epay.http.HOpCode;
 import org.epay.http.filter.TokenHttpFilter;
+import org.epay.log.HttpclientLog;
 import org.epay.log.MariadbLog;
+import org.epay.log.ThreadmsgLog;
 import org.epay.msg.MsgOpCode;
 import org.epay.service.AppService;
 import org.epay.service.LoginService;
@@ -37,10 +39,11 @@ public class Expand implements IExpandServer {
 		String configFileName = servletContext.getInitParameter("configFileName");
 		Properties properties = loadConfig(configFileName);
 		MybatisManager.init(properties.getProperty("config_dir"), "mybatis-config.xml", new MariadbLog());
-		HttpUtil.init("UTF-8", null);
-		AsyncThreadManager.init(100, 10, 3, 0, null);
+		HttpUtil.init("UTF-8", new HttpclientLog());
+		ThreadmsgLog threadmsgLog = new ThreadmsgLog();
+		AsyncThreadManager.init(100, 10, 3, 0, threadmsgLog);
 		AsyncThreadManager.start();
-		MsgManager.init(true, null);
+		MsgManager.init(true, threadmsgLog);
 		CommonConfig.init(properties);
 		HOpCode.init();
 
