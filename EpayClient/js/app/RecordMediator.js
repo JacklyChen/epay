@@ -20,7 +20,7 @@ function RecordMediator() {
 
     }
     // 关心消息数组
-    this.listNotificationInterests = [$T.notificationExt.GET_APP_LIST_SUCCESS,$T.notificationExt.CREATE_RECORD_SUCCESS];
+    this.listNotificationInterests = [$T.notificationExt.GET_APP_LIST_SUCCESS, $T.notificationExt.CREATE_RECORD_SUCCESS];
     // 关心的消息处理
     this.handleNotification = function (data) {
         switch (data[0].name) {
@@ -29,7 +29,7 @@ function RecordMediator() {
                 $("#createRecord").on("click", this.onCreateRecord);
                 break;
             case $T.notificationExt.CREATE_RECORD_SUCCESS:
-                window.location.href = "loginPayCenter.html?token=" + this.token+"&orderRecordId="+data[0].body['orderRecordData']['orderRecordId'];
+                window.location.href = "loginPayCenter.html?token=" + this.token + "&orderRecordId=" + data[0].body['orderRecordData']['orderRecordId'];
                 break;
         }
     }
