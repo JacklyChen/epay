@@ -1,20 +1,12 @@
-function PayFailMediator() {
-    this.init = function (view) {
-        var height = $(window).height();
-        $(".bg-e8e").innerHeight(height)
-    }
-    // 注销方法
-    this.dispose = function () {
-
-    }
-    // 关心消息数组
-    this.listNotificationInterests = [];
-    // 关心的消息处理
-    this.handleNotification = function (data) {
-
-    }
-    this.advanceTime = function (passedTime) {
-
-    }
-}
-$T.payFailMediator = new PayFailMediator();
+(function (window) {
+    if (!window.epay) window.epay = {};
+    var Mediator = window.juggle.Mediator;
+    var PayFailMediator = function () {
+        this.initView = function (view) {
+            var height = $(window).height();
+            $(".bg-e8e").innerHeight(height)
+        };
+        Mediator.apply(this);
+    };
+    window.epay.PayFailMediator = PayFailMediator;
+})(window);

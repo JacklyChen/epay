@@ -3,33 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>收银台--登录</title>
-    <script src="js/lib/threecss-c.js?v=v1.0.0" type="text/javascript"></script>
+    <script src="js/lib/juggle-all.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.min.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.cookie.js" type="text/javascript"></script>
+
+    <script src="js/app/NotificationExt.js" type="text/javascript"></script>
+    <script src="js/app/Url.js" type="text/javascript"></script>
+
+    <script src="js/app/data/http/TokenProxy.js" type="text/javascript"></script>
+    <script src="js/app/LoginMediator.js" type="text/javascript"></script>
+
+    <link href='css/base1.css' rel='stylesheet' type='text/css'/>
+    <link href='css/login_w.css' rel='stylesheet' type='text/css'/>
+
+
 </head>
 <script type="text/javascript">
-    //初始化内部类
-    $T.version.init();
-    //加载内部类
-    $T.version.loadScript("js/lib/jquery.min.js");
-    $T.version.loadScript("js/lib/jquery.cookie.js");
-    $T.version.loadScript("js/lib/Math.uuid.js");
-
-    $T.version.loadScript("js/app/NotificationExt.js");
-    $T.version.loadScript("js/app/Url.js");
-    $T.version.loadScript("js/app/CookieParam.js");
-    $T.version.loadScript("js/app/CookieName.js");
-    $T.version.loadScript("js/app/data/http/TokenProxy.js");
-    $T.version.loadScript("js/app/LoginMediator.js");
-
-    $T.version.loadCss("css/base1.css");
-    $T.version.loadCss("css/login_w.css");
 
     window.onload = function () {
-        //初始化过滤器
-        var testFilter = new TestFilter();
-        $T.httpResultFilter.addFilter(testFilter);
-        //初始化控制器
-        $T.loginMediator.init();
-        $T.register.register($T.loginMediator);
+        var mediator = new epay.LoginMediator();
+        mediator.initView();
     }
 </script>
 <body>

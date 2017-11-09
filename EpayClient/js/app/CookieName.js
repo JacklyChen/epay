@@ -1,4 +1,7 @@
-function CookieName() {
-    this.TOKEN = "token";
-}
-$T.cookieName = new CookieName();
+(function (window) {
+    if (!window.epay) window.epay = {};
+    var CookieName = function () {
+        this.TOKEN = "token";
+    };
+    window.epay.cookieName = new CookieName();
+})(window);
