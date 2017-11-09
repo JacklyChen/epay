@@ -13,7 +13,7 @@
         this.locationUrl = null;
         this.initView = function (view) {
             var height = $(window).height();
-            $(".bg-e8e").innerHeight(height)
+            $(".bg-e8e").innerHeight(height);
             if (cookieParam.getCookieParam(cookieName.TOKEN) === null || cookieParam.getCookieParam(cookieName.TOKEN) === undefined) {
                 alert("未登录");
                 return;

@@ -25,6 +25,7 @@
     window.onload = function () {
         var mediator = new epay.LoginPayCenterMediator();
         mediator.initView();
+        juggle.jugglerManager.juggler.add(mediator);
     }
 </script>
 <body>

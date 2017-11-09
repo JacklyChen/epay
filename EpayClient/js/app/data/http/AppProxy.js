@@ -6,6 +6,7 @@
     var url = window.epay.url;
     var cookieName = window.epay.cookieName;
     var cookieParam = window.epay.cookieParam;
+    var notificationExt = window.epay.notificationExt;
     var AppProxy = function () {
         Proxy.apply(this);
         this.createApp = function (appName, appReturnUrl, appNotifyUrl) {
