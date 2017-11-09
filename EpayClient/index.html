@@ -17,6 +17,7 @@
     <script src="js/app/data/http/PayProxy.js" type="text/javascript"></script>
 
     <script src="js/app/PayCenterErrorMsg.js" type="text/javascript"></script>
+    <script src="js/app/PayCenterErrorFilter.js" type="text/javascript"></script>
     <script src="js/app/IndexMediator.js" type="text/javascript"></script>
 
     <link href='css/base.css' rel='stylesheet' type='text/css'/>
@@ -26,6 +27,7 @@
 <script type="text/javascript">
 
     window.onload = function () {
+        juggle.httpFilter.addFilter(new epay.PayCenterErrorFilter());
         var mediator = new epay.IndexMediator();
         mediator.initView();
     }

@@ -5,7 +5,6 @@
     var notificationExt = window.epay.notificationExt;
     var getUrlParam = window.epay.getUrlParam;
     var payProxy = window.epay.payProxy;
-    var payCenterErrorMsg = window.epay.payCenterErrorMsg;
     var Mediator = window.juggle.Mediator;
     var PaySuccessMediator = function () {
         this.loginSuccess = false;
@@ -26,7 +25,7 @@
             payProxy.getReturnUrl(orderRecordId);
         };
         // 关心消息数组
-        this.listNotificationInterests = [notificationExt.GET_RETURN_URL_SUCCESS, notificationExt.GET_RETURN_URL_FAIL, notificationExt.PAYCENTER_ERROR];
+        this.listNotificationInterests = [notificationExt.GET_RETURN_URL_SUCCESS, notificationExt.GET_RETURN_URL_FAIL];
         // 关心的消息处理
         this.handleNotification = function (data) {
             switch (data.name) {
@@ -35,10 +34,6 @@
                     this.locationUrl = data.body.returnUrl;
                     break;
                 case notificationExt.GET_RETURN_URL_FAIL:
-
-                    break;
-                case notificationExt.PAYCENTER_ERROR:
-                    alert(payCenterErrorMsg.errorMap[data.body]);
                     break;
             }
         };

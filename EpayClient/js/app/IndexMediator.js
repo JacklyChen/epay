@@ -6,7 +6,6 @@
     var getUrlParam = window.epay.getUrlParam;
     var orderRecordProxy = window.epay.orderRecordProxy;
     var payProxy = window.epay.payProxy;
-    var payCenterErrorMsg = window.epay.payCenterErrorMsg;
     var Mediator = window.juggle.Mediator;
     var IndexMediator = function () {
         this.isCanPay = false;
@@ -46,13 +45,10 @@
             $("#index_pay").on("click", callFunc);
         };
         // 关心消息数组
-        this.listNotificationInterests = [notificationExt.PAYCENTER_ERROR, notificationExt.GET_ORDER_RECORD_SUCCESS, notificationExt.ADD_PAY_HTML];
+        this.listNotificationInterests = [notificationExt.GET_ORDER_RECORD_SUCCESS, notificationExt.ADD_PAY_HTML];
         // 关心的消息处理
         this.handleNotification = function (data) {
             switch (data.name) {
-                case notificationExt.PAYCENTER_ERROR:
-                    alert(payCenterErrorMsg.errorMap[data.body]);
-                    break;
                 case notificationExt.GET_ORDER_RECORD_SUCCESS:
                     this.initData(data.body.orderRecordData);
                     this.isCanPay = true;
