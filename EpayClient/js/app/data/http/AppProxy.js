@@ -1,12 +1,11 @@
 (function (window) {
     if (!window.epay) window.epay = {};
     var Proxy = window.juggle.Proxy;
-    var HttpClient = window.juggle.HttpClient;
-    var httpEventType = window.juggle.httpEventType;
     var url = window.epay.url;
     var cookieName = window.epay.cookieName;
     var cookieParam = window.epay.cookieParam;
     var notificationExt = window.epay.notificationExt;
+    var httpFilter = window.juggle.httpFilter;
     var AppProxy = function () {
         Proxy.apply(this);
         this.createApp = function (appName, appReturnUrl, appNotifyUrl) {
@@ -16,19 +15,15 @@
                 "appReturnUrl": appReturnUrl,
                 "appNotifyUrl": appNotifyUrl
             };
-
             var header = [];
             header["hOpCode"] = "200";
             header[cookieName.TOKEN] = cookieParam.getCookieParam(cookieName.TOKEN);
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.url, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.createAppSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.createAppFail, this);
+            httpFilter.send(data, url.url, header, null, null, this, this.createAppSuccess, this.createAppFail);
         };
-        this.createAppSuccess = function (event) {
+        this.createAppSuccess = function (result) {
 
         };
-        this.createAppFail = function (event) {
+        this.createAppFail = function () {
 
         };
         this.updateApp = function (appId, appName, updateAppKey, appState, appReturnUrl, appNotifyUrl) {
@@ -41,20 +36,15 @@
                 "appReturnUrl": appReturnUrl,
                 "appNotifyUrl": appNotifyUrl
             };
-
             var header = [];
             header["hOpCode"] = "201";
             header[cookieName.TOKEN] = cookieParam.getCookieParam(cookieName.TOKEN);
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.url, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.updateAppSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.updateAppFail, this);
+            httpFilter.send(data, url.url, header, null, null, this, this.updateAppSuccess, this.updateAppFail);
+        };
+        this.updateAppSuccess = function (result) {
 
         };
-        this.updateAppSuccess = function (event) {
-
-        };
-        this.updateAppFail = function (event) {
+        this.updateAppFail = function () {
 
         };
         this.getApp = function (appId) {
@@ -62,19 +52,15 @@
                 "hOpCode": "202",
                 "appId": appId
             };
-
             var header = [];
             header["hOpCode"] = "202";
             header[cookieName.TOKEN] = cookieParam.getCookieParam(cookieName.TOKEN);
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.url, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.getAppSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.getAppFail, this);
+            httpFilter.send(data, url.url, header, null, null, this, this.getAppSuccess, this.getAppFail);
         };
-        this.getAppSuccess = function (event) {
+        this.getAppSuccess = function (result) {
 
         };
-        this.getAppFail = function (event) {
+        this.getAppFail = function () {
 
         };
         this.getAppList = function (appName, appCreateTimeGreaterThan, appCreateTimeLessThan, appState, currentPage, pageSize) {
@@ -87,20 +73,15 @@
                 "currentPage": currentPage,
                 "pageSize": pageSize
             };
-
             var header = [];
             header["hOpCode"] = "203";
             header[cookieName.TOKEN] = cookieParam.getCookieParam(cookieName.TOKEN);
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.url, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.getAppListSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.getAppListFail, this);
+            httpFilter.send(data, url.url, header, null, null, this, this.getAppListSuccess, this.getAppListFail);
         };
-        this.getAppListSuccess = function (event) {
-            var result = JSON.parse(event.mData);
+        this.getAppListSuccess = function (result) {
             this.notifyObservers(this.getNotification(notificationExt.GET_APP_LIST_SUCCESS, result));
         };
-        this.getAppListFail = function (event) {
+        this.getAppListFail = function () {
 
         }
     };

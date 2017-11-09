@@ -1,10 +1,13 @@
-function PayCenterErrorFilter() {
-    this.filter = function (result, sendParam) {
-        if (result.hOpCode == 199) {
-            $T.viewManager.notifyObservers($T.viewManager.getNotification($T.notificationExt.PAYCENTER_ERROR, result.errorCode));
-            return false;
-        } else {
-            return true;
+(function (window) {
+    if (!window.epay) window.epay = {};
+    var PayCenterErrorFilter = function () {
+        this.filter = function (result) {
+            if (result.hOpCode === "199") {
+                return false;
+            } else {
+                return true;
+            }
         }
-    }
-}
+    };
+    window.epay.PayCenterErrorFilter = PayCenterErrorFilter;
+})(window);

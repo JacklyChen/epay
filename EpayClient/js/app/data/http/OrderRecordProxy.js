@@ -1,12 +1,11 @@
 (function (window) {
     if (!window.epay) window.epay = {};
     var Proxy = window.juggle.Proxy;
-    var HttpClient = window.juggle.HttpClient;
-    var httpEventType = window.juggle.httpEventType;
     var url = window.epay.url;
     var cookieName = window.epay.cookieName;
     var cookieParam = window.epay.cookieParam;
     var notificationExt = window.epay.notificationExt;
+    var httpFilter = window.juggle.httpFilter;
     var OrderRecordProxy = function () {
         Proxy.apply(this);
         this.createOrderRecord = function (appId, orderRecordOrderId, orderRecordTotalPrice, orderRecordUserId, orderRecordOrderDetail, orderRecordUserName, orderRecordReturnUrl, orderRecordNotifyUrl, orderGoodsArray) {
@@ -22,20 +21,15 @@
                 "orderRecordNotifyUrl": orderRecordNotifyUrl,
                 "orderGoodsArray": orderGoodsArray
             };
-
             var header = [];
             header["hOpCode"] = "210";
             header[cookieName.TOKEN] = cookieParam.getCookieParam(cookieName.TOKEN);
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.url, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.createOrderRecordSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.createOrderRecordFail, this);
+            httpFilter.send(data, url.url, header, null, null, this, this.createOrderRecordSuccess, this.createOrderRecordFail);
         };
-        this.createOrderRecordSuccess = function (event) {
-            var result = JSON.parse(event.mData);
+        this.createOrderRecordSuccess = function (result) {
             this.notifyObservers(this.getNotification(notificationExt.CREATE_RECORD_SUCCESS, result));
         };
-        this.createOrderRecordFail = function (event) {
+        this.createOrderRecordFail = function () {
 
         };
         this.updateOrderRecord = function (orderRecordId, orderRecordPayStatus, orderRecordStatus, orderRecordPayChannel, orderRecordNotifyResult, orderRecordNotifyTime) {
@@ -48,20 +42,15 @@
                 "orderRecordNotifyResult": orderRecordNotifyResult,
                 "orderRecordNotifyTime": orderRecordNotifyTime
             };
-
             var header = [];
             header["hOpCode"] = "211";
             header[cookieName.TOKEN] = cookieParam.getCookieParam(cookieName.TOKEN);
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.url, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.updateOrderRecordSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.updateOrderRecordFail, this);
+            httpFilter.send(data, url.url, header, null, null, this, this.updateOrderRecordSuccess, this.updateOrderRecordFail);
+        };
+        this.updateOrderRecordSuccess = function (result) {
 
         };
-        this.updateOrderRecordSuccess = function (event) {
-
-        };
-        this.updateOrderRecordFail = function (event) {
+        this.updateOrderRecordFail = function () {
 
         };
         this.getOrderRecord = function (orderRecordId) {
@@ -69,21 +58,15 @@
                 "hOpCode": "212",
                 "orderRecordId": orderRecordId
             };
-
             var header = [];
             header["hOpCode"] = "212";
             header[cookieName.TOKEN] = cookieParam.getCookieParam(cookieName.TOKEN);
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.url, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.getOrderRecordSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.getOrderRecordFail, this);
-
+            httpFilter.send(data, url.url, header, null, null, this, this.getOrderRecordSuccess, this.getOrderRecordFail);
         };
-        this.getOrderRecordSuccess = function (event) {
-            var result = JSON.parse(event.mData);
+        this.getOrderRecordSuccess = function (result) {
             this.notifyObservers(this.getNotification(notificationExt.GET_ORDER_RECORD_SUCCESS, result));
         };
-        this.getOrderRecordFail = function (event) {
+        this.getOrderRecordFail = function () {
 
         };
         this.getOrderRecordList = function (appId, orderRecordOrderId, orderRecordCreateTimeGreaterThan, orderRecordCreateTimeLessThan, orderRecordPayStatus, orderRecordStatus, orderRecordUserId, orderRecordPayChannel, orderRecordOrderDetail, orderRecordNotifyResult, currentPage, pageSize) {
@@ -102,19 +85,15 @@
                 "currentPage": currentPage,
                 "pageSize": pageSize
             };
-
             var header = [];
             header["hOpCode"] = "213";
             header[cookieName.TOKEN] = cookieParam.getCookieParam(cookieName.TOKEN);
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.url, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.getOrderRecordListSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.getOrderRecordListFail, this);
+            httpFilter.send(data, url.url, header, null, null, this, this.getOrderRecordListSuccess, this.getOrderRecordListFail);
         };
-        this.getOrderRecordListSuccess = function (event) {
+        this.getOrderRecordListSuccess = function (result) {
 
         };
-        this.getOrderRecordListFail = function (event) {
+        this.getOrderRecordListFail = function () {
 
         }
     };

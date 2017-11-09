@@ -1,10 +1,9 @@
 (function (window) {
     if (!window.epay) window.epay = {};
     var Proxy = window.juggle.Proxy;
-    var HttpClient = window.juggle.HttpClient;
-    var httpEventType = window.juggle.httpEventType;
     var url = window.epay.url;
     var notificationExt = window.epay.notificationExt;
+    var httpFilter = window.juggle.httpFilter;
     var TokenProxy = function () {
         Proxy.apply(this);
         this.getToken = function (userName, userPassword) {
@@ -13,19 +12,14 @@
                 "userName": userName,
                 "userPassword": userPassword
             };
-
             var header = [];
             header["hOpCode"] = "20";
-            var httpClient = new HttpClient();
-            httpClient.send(data, url.ucUrl, header);
-            httpClient.addEventListener(httpEventType.SUCCESS, this.getTokenSuccess, this);
-            httpClient.addEventListener(httpEventType.ERROR, this.getTokenFail, this);
+            httpFilter.send(data, url.ucUrl, header, null, null, this, this.getTokenSuccess, this.getTokenFail);
         };
-        this.getTokenSuccess = function (event) {
-            var result = JSON.parse(event.mData);
+        this.getTokenSuccess = function (result) {
             this.notifyObservers(this.getNotification(notificationExt.LOGIN_SUCCESS, result));
         };
-        this.getTokenFail = function (event) {
+        this.getTokenFail = function () {
 
         }
     };
