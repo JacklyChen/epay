@@ -1,23 +1,17 @@
-function NotifyMediator() {
-
-    this.init = function (view) {
-        $("#verifyNotify").on("click", this.onVerifyNotify);
-    }
-    // 注销方法
-    this.dispose = function () {
-
-    }
-    // 关心消息数组
-    this.listNotificationInterests = [];
-    // 关心的消息处理
-    this.handleNotification = function (data) {
-
-    }
-    this.onVerifyNotify = function () {
-        var notifyId = $("#notifyId").val();
-        var appId = $("#appId").val();
-        $T.notifyProxy.verifyNotify(notifyId, appId);
-    }
-
-}
-$T.notifyMediator = new NotifyMediator();
+(function (window) {
+    if (!window.epay) window.epay = {};
+    var Mediator = window.juggle.Mediator;
+    var notifyProxy = window.epay.notifyProxy;
+    var NotifyMediator = function () {
+        this.initView = function (view) {
+            $("#verifyNotify").on("click", this.onVerifyNotify);
+        };
+        this.onVerifyNotify = function () {
+            var notifyId = $("#notifyId").val();
+            var appId = $("#appId").val();
+            notifyProxy.verifyNotify(notifyId, appId);
+        };
+        Mediator.apply(this);
+    };
+    window.epay.NotifyMediator = NotifyMediator;
+})(window);
