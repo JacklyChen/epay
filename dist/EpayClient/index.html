@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>收银台--支付</title>
+    <script src="js/lib/juggle-all.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.min.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.cookie.js" type="text/javascript"></script>
+
+    <script src="js/app/NotificationExt.js" type="text/javascript"></script>
+    <script src="js/app/Url.js" type="text/javascript"></script>
+    <script src="js/app/CookieParam.js" type="text/javascript"></script>
+    <script src="js/app/CookieName.js" type="text/javascript"></script>
+    <script src="js/app/GetUrlParam.js" type="text/javascript"></script>
+
+    <script src="js/app/data/http/OrderRecordProxy.js" type="text/javascript"></script>
+    <script src="js/app/data/http/PayProxy.js" type="text/javascript"></script>
+
+    <script src="js/app/PayCenterErrorMsg.js" type="text/javascript"></script>
+    <script src="js/app/PayCenterErrorFilter.js" type="text/javascript"></script>
+    <script src="js/app/IndexMediator.js" type="text/javascript"></script>
+
+    <link href='css/base.css' rel='stylesheet' type='text/css'/>
+    <link href='css/checkstand.css' rel='stylesheet' type='text/css'/>
+
+</head>
+<script type="text/javascript">
+
+    window.onload = function () {
+        juggle.httpFilter.addFilter(new epay.PayCenterErrorFilter());
+        var mediator = new epay.IndexMediator();
+        mediator.initView();
+    }
+</script>
+<body class="bg-e8e">
+<!--header start-->
+<div class="header">
+    <div class="wrapper">
+        <p>收银台</p>
+    </div>
+</div>
+<!--header over-->
+<!--main start-->
+<div class="wrapper">
+    <div class="mainContain">
+        <div class="mainT">
+            <h5 class="state">
+                <img class="stateIcon" src="images/sucIconS.png"/>
+                <span>订单提交成功，请您尽快付款。订单号：</span><span id="index_order_record_order_id"></span>
+            </h5>
+            <p class="alert">未成功支付，订单将在 <span>23小时50分钟</span> 后自动取消，请及时付款。</p>
+            <div class="borderB">
+                <a class="orderbtn" href="javascript:;">订单详情</a>
+                <div class="clear"></div>
+            </div>
+            <ul class="orderList hide" id="index_order_goods_list">
+            </ul>
+            <p class="money">应付金额：<span id="index_total_price"></span></p>
+
+        </div>
+        <div class="mainB">
+            <p class="borderB pb20">支付平台</p>
+            <p class="payStyle">支付宝</p>
+            <div class="mt30">
+                <p class="paySName">支付方式：<span>支付宝</span></p>
+                <a class="payBtn" href="javascript:;" id="index_pay">立即支付</a>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="index_payhtml"></div>
+<!--main over-->
+<!--footer start-->
+<p class="footer">技术版权所有 © 天津卓朗科技发展有限公司 2013 TROILA.Inc. 保留一切权利。津ICP备10200312号-4</p>
+<!--footer over-->
+</body>
+</html>

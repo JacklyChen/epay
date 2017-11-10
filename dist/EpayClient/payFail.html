@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>收银台--付款失败</title>
+    <script src="js/lib/juggle-all.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.min.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.cookie.js" type="text/javascript"></script>
+
+    <script src="js/app/PayFailMediator.js" type="text/javascript"></script>
+
+    <link href='css/base.css' rel='stylesheet' type='text/css'/>
+    <link href='css/checkstand.css' rel='stylesheet' type='text/css'/>
+
+</head>
+<script type="text/javascript">
+
+    window.onload = function () {
+        var mediator = new epay.PayFailMediator();
+        mediator.initView();
+    }
+</script>
+<body>
+<div class="bg-e8e">
+    <!--header start-->
+    <div class="header">
+        <div class="wrapper">
+            <p>收银台</p>
+        </div>
+    </div>
+    <!--header over-->
+    <!--main start-->
+    <div class="wrapper">
+        <div class="mainContain">
+            <div class="paymainT">
+                <img class="payImg" src="images/payFail.png" alt=""/>
+            </div>
+            <div class="paymainB">
+                <h5 class="payText payFailT">付款失败，请重新支付</h5>
+                <p class="payAlert">请检查您的余额是否充足，请检查您的余额是否充足</p>
+                <a class="payBtnText" href="javascript:;">继续支付</a>
+            </div>
+        </div>
+    </div>
+    <!--main over-->
+    <!--footer start-->
+    <p class="footer payfooter">技术版权所有 © 天津卓朗科技发展有限公司 2013 TROILA.Inc. 保留一切权利。津ICP备10200312号-4</p>
+    <!--footer over-->
+</div>
+</body>
+</html>

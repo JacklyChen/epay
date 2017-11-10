@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>收银台--生成订单</title>
+    <script src="js/lib/juggle-all.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.min.js" type="text/javascript"></script>
+    <script src="js/lib/jquery.cookie.js" type="text/javascript"></script>
+    <script src="js/lib/Math.uuid.js" type="text/javascript"></script>
+
+    <script src="js/app/NotificationExt.js" type="text/javascript"></script>
+    <script src="js/app/Url.js" type="text/javascript"></script>
+    <script src="js/app/CookieParam.js" type="text/javascript"></script>
+    <script src="js/app/CookieName.js" type="text/javascript"></script>
+    <script src="js/app/GetUrlParam.js" type="text/javascript"></script>
+
+    <script src="js/app/data/http/AppProxy.js" type="text/javascript"></script>
+    <script src="js/app/data/http/OrderRecordProxy.js" type="text/javascript"></script>
+
+    <script src="js/app/RecordMediator.js" type="text/javascript"></script>
+
+    <link href='css/base1.css' rel='stylesheet' type='text/css'/>
+    <link href='css/login_w.css' rel='stylesheet' type='text/css'/>
+
+</head>
+<script type="text/javascript">
+
+    window.onload = function () {
+        var mediator = new epay.RecordMediator();
+        mediator.initView();
+    }
+</script>
+<body>
+<!--header start-->
+<div class="logHeader">
+    <div class="wrapper">
+        <a href="javascript:;" style="color:#ffffff;font-size: 24px">
+            收银台--模拟生成订单
+        </a>
+    </div>
+</div>
+<!--header over-->
+<!--main start-->
+<div class="pr">
+    <div class="loginBox1">
+        <h3 class="logTitle">模拟生成订单--以下不用填写点击生成</h3>
+        <div class="pr pt30">
+            <div>对接Appid</div>
+            <div class="inputBox">
+                <input type="text" id="appId"/>
+            </div>
+            <div>对接App订单id</div>
+            <div class="inputBox">
+                <input type="text" id="orderRecordOrderId"/>
+            </div>
+            <div>总价格</div>
+            <div class="inputBox">
+                <input type="text" id="orderRecordTotalPrice" value="0.01"/>
+            </div>
+            <div>用户id</div>
+            <div class="inputBox">
+                <input type="text" id="orderRecordUserId"/>
+            </div>
+            <div>详情</div>
+            <div class="inputBox">
+                <input type="text" id="orderRecordOrderDetail"/>
+            </div>
+            <div>用户名</div>
+            <div class="inputBox">
+                <input type="text" id="orderRecordUserName"/>
+            </div>
+            <div>回调地址</div>
+            <div class="inputBox">
+                <input type="text" id="orderRecordReturnUrl"/>
+            </div>
+            <div>通知地址</div>
+            <div class="inputBox">
+                <input type="text" id="orderRecordNotifyUrl"/>
+            </div>
+            <div>商品id</div>
+            <div class="inputBox">
+                <input type="text" id="orderGoodsGoodsId"/>
+            </div>
+            <div>商品名</div>
+            <div class="inputBox">
+                <input type="text" id="orderGoodsName" value="企业网盘"/>
+            </div>
+            <div>商品单价</div>
+            <div class="inputBox">
+                <input type="text" id="orderGoodsPrice" value="0.01"/>
+            </div>
+            <div>商品数量</div>
+            <div class="inputBox">
+                <input type="text" id="orderGoodsNumber" value="2"/>
+            </div>
+            <div>商品详情</div>
+            <div class="inputBox">
+                <input type="text" id="orderGoodsDetail"/>
+            </div>
+            <div>商品链接</div>
+            <div class="inputBox">
+                <input type="text" id="orderGoodsUrl"/>
+            </div>
+            <div>商品类型数量</div>
+            <div class="inputBox">
+                <input type="text" id="orderGoodsNum" value="2"/>
+            </div>
+            <a class="loginBtn" href="javascript:;" id="createRecord">生成订单</a>
+        </div>
+    </div>
+</div>
+
+<!--main over-->
+<!--footer start-->
+<div class="logFooter">
+    <div class="wrapper">
+        <p></p>
+    </div>
+</div>
+<!--footer over-->
+</body>
+</html>
