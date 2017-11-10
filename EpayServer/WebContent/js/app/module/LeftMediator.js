@@ -4,13 +4,50 @@
     var notificationExt = window.epay.notificationExt;
     var LeftMediator = function () {
         this.initView = function (view) {
-            $("#left_button").on("click", this.onClick);
-            $("#left_button1").on("click", this.onClick1);
-            $("#left_button2").on("click", this.onClick2);
-            $("#left_button3").on("click", this.onClick3);
-            $("#left_button4").on("click", this.onClick4);
-            $("#left_button5").on("click", this.onClick5);
+            this.addClick(this, this.onClick);
+            this.addClick1(this, this.onClick1);
+            this.addClick2(this, this.onClick2);
+            this.addClick3(this, this.onClick3);
+            this.addClick4(this, this.onClick4);
+            this.addClick5(this, this.onClick5);
         };
+        this.addClick = function (mediator, call) {
+            var callFunc = function (event) {
+                call.call(mediator, event);
+            };
+            $("#left_button").on("click", callFunc);
+        };
+        this.addClick1 = function (mediator, call) {
+            var callFunc = function (event) {
+                call.call(mediator, event);
+            };
+            $("#left_button1").on("click", callFunc);
+        };
+        this.addClick2 = function (mediator, call) {
+            var callFunc = function (event) {
+                call.call(mediator, event);
+            };
+            $("#left_button2").on("click", callFunc);
+        };
+        this.addClick3 = function (mediator, call) {
+            var callFunc = function (event) {
+                call.call(mediator, event);
+            };
+            $("#left_button3").on("click", callFunc);
+        };
+        this.addClick4 = function (mediator, call) {
+            var callFunc = function (event) {
+                call.call(mediator, event);
+            };
+            $("#left_button4").on("click", callFunc);
+        };
+        this.addClick5 = function (mediator, call) {
+            var callFunc = function (event) {
+                call.call(mediator, event);
+            };
+            $("#left_button5").on("click", callFunc);
+        };
+
         this.onClick = function (event) {
             this.notifyObservers(this.getNotification(notificationExt.CHANGE_BODY, "app"));
         };
